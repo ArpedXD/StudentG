@@ -1,0 +1,1 @@
+# Simple Website that shows simple Acc authentication, Websocket, FASTAPI, error handling Pydantic and Basic Chat Handling.
