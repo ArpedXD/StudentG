@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="../CSS/Sections/home.css">
+        <link rel="stylesheet" href="../CSS/Sections/chat.css">
+        <link rel="stylesheet" href="../CSS/dashboard.css">
+    </head>
+    </head>
+    <body>
+        <div class="custom-error" id="custom-error">
+            <div class="Error-code" id="Error-code">ERROR</div>
+        </div>
+        <ul id="custom-menu-show" class="contextMenu">
+            <li onclick="menuAction('Admin')">Make Admin</li>
+            <li onclick="menuAction('Remove')">Remove</li>
+            <li onclick="menuAction('Mute')">Mute</li>
+        </ul>
+
+        <ul id="custom-menu-invite" class="contextMenu">
+            <li onclick="menuAction('Invite')">Invite User</li>
+        </ul>
+
+        <div class="create-group-modal" id="create-group-modal">
+            <div class="create-group-box">
+                <h2>Create Group Chat</h2>
+                <input type="text" class="create-group-input" id="group_name" placeholder="Create Group Chat">
+                <div class="create-group-btns">
+                    <button class="create-group-yes" onclick="createGroupChat()">Yes</button>
+                    <button class="create-group-no" id="create-group-no">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="group-modal" id="group-modal">
+            <div class="group-settings">
+                <button class="group-setting-btn" id="invite_user" data-target="invite_modal">Invite User</button>
+                <button class="group-setting-btn" id="member_list" data-target="group-list-modal">Show Members</button>  
+            </div>
+            <div class="group-settings-list">
+                <button id="group-settings-exit">&#10005;</button>
+                <div class="invite_modal" id="invite_modal">
+                    <input type="text" id="search_user" class="search_user">
+                    <div class="group-user-list" id="group-user-list">
+
+                    </div>
+                </div>
+
+                <div class="group-list-modal deactivate" id="group-list-modal"></div>
+            </div>
+        </div>
+
+        <div class="blurryBG" id="blurryBG"></div>
+        <div class="app">
+            <div class="sidebar" id="sidebar">
+                <div>StudG</div>
+                <div>
+                    <div onclick="nav('HomeD')">HOME</div>
+                    <div onclick="nav('ChatD')">CHAT</div>
+                    <div onclick="nav('AnnouncementD')">ANNOUNCEMENT</div>
+                    <div onclick="nav('AssignmentD')">ASSIGNMENTS</div>
+                    <div onclick="nav('AutomatedD')">AUTOMATED</div>
+                    <div onclick="nav('NotificationD')">NOTIFICATIONS</div>
+                </div>
+            </div>
+            <div class="HomeD" id="HomeD">
+                <div class="Home-sidebar"></div>
+            </div>
+            <div class="ChatD" id="ChatD">
+                <div class="chatlist" id="chatlist">
+                    <div class="header"> GROUP CHATS</div>
+                    <button class="create-chat" id="create-chat">+</button>
+                </div>
+                <div class="chat" id="chat_layout">
+                    <div class="chat-nav">
+                        <div class="chat-menu" id="chat-menu">&#9776;</div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        
+                    </div>
+                    <div class="chatbox-container">
+                        <input type="input" class="chatbox" id="chatbox">
+                        <button type="button" class="send" onclick="sendMessage()"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="AnnouncementD" id="AnnouncementD">
+                <div class="picture"></div>
+            </div>
+            <div class="AssignmentD" id="AssignmentD">
+                <div class="picture"></div>
+            </div>
+            <div class="AutomatedD" id="AutomatedD">
+                <div class="picture"></div>
+            </div>
+            <div class="NotificationD" id="NotificationD">
+                <div class="picture"></div>
+            </div>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="../JS/JSTOOLS/JSTOOLS.js"></script>
+        <script src="../JS/Columns/Chat.js"></script>
+        <script src="../JS/dashboard.js"></script>
+    </body>
+</html>

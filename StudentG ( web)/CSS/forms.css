@@ -1,0 +1,178 @@
+:root {
+    --bg-gradient-1: #1a1a2e;
+    --bg-gradient-2: #16213e;
+    --card-bg: #1e1e2f;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+    --toggle-bg: #2a2a3d;
+    --toggle-border: #3a3a4d;
+    --toggle-color: #aaaaaa;
+    --toggle-hover: #3a3a4d;
+    --toggle-active-bg: #4a4ae0;
+    --toggle-active-color: #ffffff;
+    --heading-color: #e0e0e0;
+    --input-border: #3a3a4d;
+    --input-focus-border: #6a6af0;
+    --btn-bg: #4a4ae0;
+    --btn-color: #ffffff;
+    --btn-hover: #5a5af0;
+    --switch-text-color: #999999;
+    --switch-link-color: #6a6af0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+    overflow-y:hidden
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.form-box {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 10px 40px var(--card-shadow);
+}
+
+.form-toggle {
+    display: flex;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--toggle-border);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: var(--toggle-bg);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--toggle-color);
+    transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+    background: var(--toggle-active-bg);
+    color: var(--toggle-active-color);
+}
+
+.toggle-btn:hover:not(.active) {
+    background: var(--toggle-hover);
+}
+
+.form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form.active-form {
+    display: flex;
+}
+
+.form h2 {
+    text-align: center;
+    color: var(--heading-color);
+    margin-bottom: 5px;
+}
+
+.form input {
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    background: transparent;
+    color: var(--heading-color);
+    transition: border 0.3s ease;
+}
+
+.form input:focus {
+    border-color: var(--input-focus-border);
+}
+
+.form input::placeholder {
+    color: var(--switch-text-color);
+}
+
+.form button {
+    padding: 12px;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 5px;
+}
+
+.form button:hover {
+    background: var(--btn-hover);
+}
+
+.switch-text {
+    text-align: center;
+    color: var(--switch-text-color);
+    font-size: 14px;
+}
+
+.switch-text span {
+    color: var(--switch-link-color);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.switch-text span:hover {
+    text-decoration: underline;
+}
+
+.notif{
+    height:10vh;
+    width:40vh;
+    padding:2vh;
+    background-color: rgb(26, 23, 46);
+    position:absolute;
+    right:1vh;
+    color:white;
+    border:1px solid #000000;
+    box-shadow: 0px 0px 10px rgb(16, 11, 22);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    animation-name: notif;
+    opacity:1;
+    right:1vh;
+    bottom:20vh;
+    animation-duration: 2s;
+}
+
+
+@keyframes notif {
+    0%{
+        bottom:20vh;
+        right:1vh;
+    }100%{
+        bottom:-10vh;
+        right:1vh;
+        opacity: 0;
+    }
+}

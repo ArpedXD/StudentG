@@ -1,0 +1,2 @@
+class FailedToConnectToDB(Exception):
+    pass

@@ -1,0 +1,638 @@
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root{
+    /* surfaces */
+    --bg-app:        #100e1c;
+    --bg-panel:       #171328;
+    --bg-panel-alt:   #1d1832;
+    --bg-elevated:    #241d3d;
+    --bg-input:       #2a2246;
+
+    /* borders */
+    --border-subtle:  rgba(255, 255, 255, 0.06);
+    --border-strong:  rgba(255, 255, 255, 0.12);
+
+    /* accent */
+    --accent:         #7c6ae8;
+    --accent-hover:   #9385f0;
+    --accent-soft:    rgba(124, 106, 232, 0.16);
+
+    /* text */
+    --text-primary:   #f1eef9;
+    --text-muted:     #a99fc9;
+    --text-faint:     #766c94;
+
+    /* elevation */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+
+    /* motion */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* type */
+    --font-ui: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-display: 'Poppins', 'Gill Sans', 'Trebuchet MS', sans-serif;
+}
+
+/* ============================================================
+   Layout shell
+   ============================================================ */
+.ChatD{
+    display: none;
+    flex-direction: row;
+    background-color: var(--bg-app);
+    width: 210vh;
+    height: 98vh;
+    margin: 1vh;
+    box-sizing: border-box;
+    padding: 2vh;
+    gap: 1.5vh;
+    font-family: var(--font-ui);
+}
+
+.ChatD.active{
+    display: flex;
+}
+
+.ChatD .chatlist{
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.6vh;
+    width: 50vh;
+    height: 100%;
+    box-shadow: var(--shadow-sm);
+}
+
+.ChatD .chat{
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.6vh;
+    margin-left: 0;
+    flex: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: flex 0.4s var(--ease);
+}
+
+.chat.active{
+    flex: 1;
+}
+
+/* ============================================================
+   Message composer
+   ============================================================ */
+.ChatD .chatbox-container{
+    position: sticky;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2vh;
+    padding: 1.5vh 2vh 2vh 2vh;
+}
+
+.ChatD .chatbox{
+    background-color: var(--bg-input);
+    flex: 1;
+    height: 6.5vh;
+    box-sizing: border-box;
+    border: 1px solid var(--border-subtle);
+    border-radius: 3vh;
+    font-family: var(--font-ui);
+    font-size: 1.9vh;
+    color: var(--text-primary);
+    padding: 0 2.2vh;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.chatbox::placeholder{
+    color: var(--text-faint);
+}
+
+.chatbox:focus{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.send{
+    position: relative;
+    height: 6vh;
+    width: 6vh;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--accent);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s var(--ease), transform 0.15s var(--ease);
+}
+
+/* HTML ships this button empty — draw a simple send arrow with CSS
+   instead of relying on an icon font or inline SVG */
+.send::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    width: 1.4vh;
+    height: 1.4vh;
+    border-top: 0.28vh solid var(--text-primary);
+    border-right: 0.28vh solid var(--text-primary);
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.send:hover{
+    background-color: var(--accent-hover);
+    transform: scale(1.06);
+}
+
+.send:active{
+    transform: scale(0.96);
+}
+
+/* ============================================================
+   Chat list
+   ============================================================ */
+.chatlist{
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    padding: 1.5vh;
+    padding-bottom: 11vh;
+}
+
+.chatlist .create-chat{
+    position: absolute;
+    right: 2vh;
+    bottom: 2vh;
+    transform: scale(1);
+    height: 8vh;
+    width: 8vh;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--accent);
+    font-size: 4vh;
+    cursor: pointer;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+.chatlist .create-chat:hover{
+    transform: scale(1.1);
+    background-color: var(--accent-hover);
+}
+
+.chatlist .Group{
+    font-weight: 600;
+    border-radius: 1.4vh;
+    margin-top: 1vh;
+    height: 9vh;
+    background-color: var(--bg-panel-alt);
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    width: 100%;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 1vh 1.4vh;
+    overflow: hidden;
+    transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.chatlist .Group:hover{
+    background-color: var(--bg-elevated);
+    border-color: var(--border-strong);
+}
+
+.Group .group-name{
+    font-size: 2.1vh;
+    font-family: var(--font-ui);
+    letter-spacing: 0.01em;
+    cursor: pointer;
+}
+
+.Group .group-pic{
+    height: 7vh;
+    width: 7vh;
+    margin: 1vh;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #4a3f8f);
+    flex-shrink: 0;
+}
+
+.chatlist .header{
+    align-self: center;
+    color: var(--text-primary);
+    margin-top: 0.5vh;
+    margin-bottom: 0.5vh;
+    font-family: var(--font-display);
+    font-size: 3.2vh;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Active chat panel
+   ============================================================ */
+.chat .chat-nav{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 9vh;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 0 1.5vh;
+    box-sizing: border-box;
+    background-color: var(--bg-panel-alt);
+    border-bottom: 1px solid var(--border-subtle);
+    z-index: 2;
+}
+
+.chat .chat-messages{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5vh 2vh;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-soft) transparent;
+}
+
+.user-message{
+    margin: 0.8vh 0;
+    margin-left: auto;
+    width: fit-content;
+    max-width: 50vh;
+    color: var(--text-primary);
+    font-size: 2vh;
+    word-wrap: break-word;
+}
+
+.user-message div{
+    margin: 0.4vh 0;
+    margin-left: auto;
+    width: fit-content;
+    max-width: 50vh;
+    padding: 1.4vh 1.8vh;
+    border-radius: 2vh 2vh 0.4vh 2vh;
+    font-size: 2vh;
+    line-height: 1.4;
+    color: var(--text-primary);
+    background-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+    word-wrap: break-word;
+}
+
+.other-message{
+    margin: 0.8vh 0;
+    align-items: flex-start;
+    margin-right: auto;
+    width: fit-content;
+    max-width: 50vh;
+    color: var(--text-primary);
+    font-size: 2vh;
+    word-wrap: break-word;
+}
+
+.other-message.msg{
+    font-size: 2vh;
+    line-height: 1.4;
+    padding: 1.4vh 1.8vh;
+    border-radius: 2vh 2vh 2vh 0.4vh;
+    background-color: var(--bg-elevated);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ============================================================
+   Create group modal
+   ============================================================ */
+.create-group-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(8, 6, 16, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 3;
+}
+
+.create-group-modal.active{
+    display: flex;
+}
+
+.create-group-box{
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 2vh;
+    padding: 4vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3vh;
+    min-width: 40vh;
+    box-shadow: var(--shadow-lg);
+}
+
+.create-group-box h2{
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 2.6vh;
+}
+
+.create-group-input{
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.5vh;
+    width: 100%;
+    height: 6vh;
+    padding: 1.5vh;
+    font-family: var(--font-ui);
+    font-size: 2vh;
+    color: var(--text-primary);
+    box-sizing: border-box;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.create-group-input:focus{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.create-group-input::placeholder{
+    color: var(--text-faint);
+}
+
+.create-group-btns{
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+    width: 100%;
+}
+
+.create-group-yes,
+.create-group-no{
+    flex: 1;
+    height: 5.2vh;
+    border-radius: 1.5vh;
+    font-size: 2vh;
+    font-family: var(--font-ui);
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s var(--ease), transform 0.15s var(--ease);
+}
+
+.create-group-yes{
+    background-color: var(--accent);
+    color: var(--text-primary);
+}
+
+.create-group-no{
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+.create-group-yes:hover{
+    background-color: var(--accent-hover);
+}
+
+.create-group-no:hover{
+    background-color: var(--bg-input);
+}
+
+.create-group-yes:active,
+.create-group-no:active{
+    transform: scale(0.98);
+}
+
+/* ============================================================
+   Group settings modal
+   ============================================================ */
+.group-modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 1.6vh;
+    height: 53vh;
+    width: 80vh;
+    z-index: 3;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1vh;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.group-modal.active{
+    display: flex;
+}
+
+.group-modal .group-settings{
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    min-width: 25vh;
+    flex: 1;
+    height: 50vh;
+    background-color: var(--bg-panel-alt);
+    border-radius: 1.2vh 0 0 1.2vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.group-settings button{
+    width: 20vh;
+    margin: 1vh;
+    flex-shrink: 0;
+    height: 8vh;
+    cursor: pointer;
+    font-size: 1.9vh;
+    font-family: var(--font-ui);
+    font-weight: 500;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.2vh;
+    color: var(--text-primary);
+    transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.group-settings button:hover{
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+}
+
+.group-settings-list{
+    width: 60vh;
+    height: 50vh;
+    margin-left: 1vh;
+    background-color: var(--bg-panel-alt);
+    border-radius: 0 1.2vh 1.2vh 0;
+    position: relative;
+}
+
+.group-settings-list #group-settings-exit{
+    position: absolute;
+    top: -2.5vh;
+    right: -2.5vh;
+    border: 1px solid var(--border-strong);
+    height: 5vh;
+    width: 5vh;
+    border-radius: 50%;
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+    font-size: 2.5vh;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.group-settings-list #group-settings-exit:hover{
+    background-color: var(--accent);
+    transform: scale(1.1);
+}
+
+/* ============================================================
+   Invite / member modals
+   ============================================================ */
+.invite_modal{
+    display: flex;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.6vh;
+    height: 48vh;
+    width: 50vh;
+    margin: 1vh;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.invite_modal.deactivate{
+    display: none;
+}
+
+.search_user{
+    outline: none;
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    margin: 1.5vh;
+    border-radius: 2vh;
+    height: 5vh;
+    width: calc(100% - 3vh);
+    padding: 0 1.5vh;
+    box-sizing: border-box;
+    font-family: var(--font-ui);
+    font-size: 1.7vh;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.search_user::placeholder{
+    color: var(--text-faint);
+}
+
+.search_user:focus{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.group-user-list{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.users{
+    height: 8vh;
+    background-color: var(--bg-elevated);
+    margin: 0.8vh 1.5vh;
+    flex-shrink: 0;
+    border-radius: 1.6vh;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    color: var(--text-primary);
+    font-size: 1.9vh;
+    transition: background-color 0.2s var(--ease);
+}
+
+.users:hover{
+    background-color: var(--accent-soft);
+}
+
+.circ-username{
+    border-radius: 50%;
+    width: 6vh;
+    height: 6vh;
+    background: linear-gradient(135deg, var(--accent), #4a3f8f);
+    margin: 1vh;
+    flex-shrink: 0;
+}
+
+#group-list-modal{
+    display: flex;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.6vh;
+    height: 48vh;
+    width: 50vh;
+    margin: 1vh;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+#group-list-modal.deactivate{
+    display: none;
+}
+
+/* ============================================================
+   Misc controls
+   ============================================================ */
+.chat-menu{
+    width: 6vh;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.4vh;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.chat-menu:hover{
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+}
