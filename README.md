@@ -76,7 +76,7 @@ pip install fastapi "uvicorn[standard]" mysql-connector-python python-dotenv bcr
 
 ### 2. Set up the database
 
-Create a database and these tables. The schema isn't in the repo, so this is reconstructed from the queries in `repositories/`; adjust types to taste.
+Create a database and these tables. The schema isn't in the repo.
 
 ```sql
 
