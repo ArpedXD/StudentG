@@ -43,21 +43,6 @@ StudentG/
     ├── CSS/
     └── JS/
 ```
-
-## How It Works
-
-**Layered backend.** The backend is organized like a restaurant: `api/` is the waiter taking orders, `services/` is the kitchen applying the logic, and `repositories/` is the pantry where all the SQL lives. Keeping them separate means you can change a recipe without rebuilding the dining room.
-
-**Authentication.** Signing up is like getting a wristband at a festival. The server checks your details, hashes your password with bcrypt so it's never stored readable, then hands your browser a random session ID cookie. Every later request shows that wristband, so you never resend your password.
-
-**Validation.** Pydantic is the bouncer checking IDs at the door: if a request is missing fields or has the wrong types, it's rejected before reaching your code. A custom Validator then checks the rules Pydantic can't, like 8-character minimums and matching passwords, returning friendly messages instead of crashes.
-
-**Real-time chat.** A normal HTTP request is like sending a letter and waiting for a reply. A WebSocket is a phone call that stays open. Once connected, the server can push a new message to everyone in a group instantly, without anyone refreshing, and each message is also saved to MySQL.
-
-**Connection pooling.** Opening a database connection is slow, like hiring a taxi for every errand. The app keeps a pool of 10 connections warm at startup, so each request borrows one and hands it back when done. This keeps responses fast and stops the database being overwhelmed.
-
-**Group roles.** The person who creates a group becomes its Admin, like a club president holding the guest list. Admins can open group settings to search for users, invite them, or remove members, while everyone else just chats. This keeps membership under one person's control.
-
 ## Getting Started
 
 ### Prerequisites
@@ -71,7 +56,7 @@ StudentG/
 There is no `requirements.txt` yet, so install the packages directly:
 
 ```bash
-pip install fastapi "uvicorn[standard]" mysql-connector-python python-dotenv bcrypt
+pip install "fastapi[standard]" mysql-connector-python python-dotenv bcrypt
 ```
 
 ### 2. Set up the database
@@ -140,7 +125,7 @@ Run from inside the backend folder, since imports are relative to it:
 
 ```bash
 cd StudentG
-uvicorn main:app --reload
+fastapi dev main.py
 ```
 
 The API is now at `http://127.0.0.1:8000`, with interactive docs at `/docs`.
