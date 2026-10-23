@@ -79,42 +79,46 @@ pip install fastapi "uvicorn[standard]" mysql-connector-python python-dotenv bcr
 Create a database and these tables. The schema isn't in the repo, so this is reconstructed from the queries in `repositories/`; adjust types to taste.
 
 ```sql
-CREATE TABLE users (
-    user_id     INT AUTO_INCREMENT PRIMARY KEY,
-    username    VARCHAR(50)  NOT NULL UNIQUE,
-    password    VARCHAR(255) NOT NULL,          -- bcrypt hash
-    email       VARCHAR(255) NOT NULL UNIQUE,
-    group_limit INT NOT NULL DEFAULT 0
+
+CREATE TABLE IF NOT EXISTS users(
+	user_id int AUTO_INCREMENT PRIMARY KEY,
+    username text,
+    password text,
+	email text,
+    group_limit int
 );
 
-CREATE TABLE sessions (
-    session_id CHAR(64) PRIMARY KEY,            -- 32 random bytes, hex-encoded
-    user_id    INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+CREATE TABLE IF NOT EXISTS sessions(
+	user_id int NOT NULL,
+    session_id text,
+    foreign key(user_id)
+		references users(user_id)
 );
 
-CREATE TABLE group_chat (
-    group_id   INT AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(100) NOT NULL,
-    group_code VARCHAR(10)  NOT NULL            -- invite code
+CREATE TABLE IF NOT EXISTS group_chat(
+	group_id int AUTO_INCREMENT PRIMARY KEY,
+    group_name text,
+    group_code text
 );
 
-CREATE TABLE group_members (
-    group_id  INT NOT NULL,
-    user_id   INT NOT NULL,
-    user_role VARCHAR(20) NOT NULL,             -- 'Admin' or 'Member'
-    PRIMARY KEY (group_id, user_id),
-    FOREIGN KEY (group_id) REFERENCES group_chat(group_id),
-    FOREIGN KEY (user_id)  REFERENCES users(user_id)
+CREATE TABLE IF NOT EXISTS group_members(
+	group_id int not null,
+    user_id int not null,
+    foreign key(user_id)
+		references users(user_id),
+	foreign key(group_id)
+		references group_chat(group_id)
 );
 
-CREATE TABLE group_messages (
-    message_id INT AUTO_INCREMENT PRIMARY KEY,
-    group_id   INT NOT NULL,
-    user_id    INT NOT NULL,
-    message    TEXT NOT NULL,
-    FOREIGN KEY (group_id) REFERENCES group_chat(group_id),
-    FOREIGN KEY (user_id)  REFERENCES users(user_id)
+CREATE TABLE IF NOT EXISTS group_messages(
+	message_id int AUTO_INCREMENT PRIMARY KEY,
+	group_id int not null,
+    message text,
+    user_id int not null,
+    foreign key(user_id)
+		references users(user_id),
+	foreign key(group_id)
+		references group_chat(group_id)
 );
 ```
 
