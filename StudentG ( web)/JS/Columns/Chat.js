@@ -142,17 +142,6 @@ async function sendMessage(){
     $("chat-messages").scrollTop = $("chat-messages").scrollHeight
     sentAmessage = true
     socket.send($("chatbox").value)
-
-    if($("chatbox").value == "/req"){
-        let res = await fetch('http://localhost:5678/webhook-test/aef31b59-e5e4-45f2-ab1e-abee09f33b9b', {
-            method:'GET',
-            headers:{
-                'mynigga' : 'myultimatenigga',
-            }
-        })
-
-
-    }
     $("chatbox").value = ""
     await wait(1000)
     sentAmessage = false
